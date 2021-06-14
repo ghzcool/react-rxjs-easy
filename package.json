@@ -1,0 +1,33 @@
+{
+  "name": "react-rxjs-hooks",
+  "version": "1.0.0",
+  "description": "React RxJS hooks",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "rxjs": "^7.1.0"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghzcool/react-rxjs-hooks.git"
+  },
+  "keywords": [
+    "react",
+    "rxjs",
+    "hook",
+    "hooks",
+    "obervable",
+    "subject",
+    "behavior",
+    "use"
+  ],
+  "author": "Pavel Pirogov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ghzcool/react-rxjs-hooks/issues"
+  },
+  "homepage": "https://github.com/ghzcool/react-rxjs-hooks#readme"
+}
