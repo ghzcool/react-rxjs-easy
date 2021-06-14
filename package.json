@@ -1,7 +1,7 @@
 {
   "name": "react-rxjs-easy",
-  "version": "1.0.0",
-  "description": "React RxJS hooks",
+  "version": "1.0.1",
+  "description": "React RxJS hooks easy",
   "type": "module",
   "main": "index.js",
   "dependencies": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ghzcool/react-rxjs-hooks.git"
+    "url": "git+https://github.com/ghzcool/react-rxjs-easy.git"
   },
   "keywords": [
     "react",
@@ -27,7 +27,7 @@
   "author": "Pavel Pirogov",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ghzcool/react-rxjs-hooks/issues"
+    "url": "https://github.com/ghzcool/react-rxjs-easy/issues"
   },
-  "homepage": "https://github.com/ghzcool/react-rxjs-hooks#readme"
+  "homepage": "https://github.com/ghzcool/react-rxjs-easy#readme"
 }

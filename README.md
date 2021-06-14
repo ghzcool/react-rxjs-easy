@@ -1,4 +1,4 @@
-# react-rxjs-hooks
+# react-rxjs-easy
 
 ## Hook from Subject usage
 
