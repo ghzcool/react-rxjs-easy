@@ -1,14 +1,18 @@
 # react-rxjs-easy
 
+## Init
+- connect React hooks in index.js
+```
+connectReactHooks(useEffect, useState);
+```
 ## Hook from Subject usage
-
 - create Subject or BehavorSubject
 ```
 export const counterSubject = new BehaviorSubject(0);
 ```
 - create hook connected with this subject
 ```
-export const useCounter = hookFromSubject({ useState, useEffect }, counterSubject);
+export const useCounter = hookFromSubject(counterSubject);
 ```
 - use this hook in functional component
 ```
@@ -22,7 +26,7 @@ counterSubject.next(counter + 1)
 - create subject and connected hook
 ```
 export const responseSubject = new BehaviorSubject(new PromiseSubjectState());
-export const useResponse = hookFromSubject({ useState, useEffect }, responseSubject);
+export const useResponse = hookFromSubject(responseSubject);
 ```
 - create function that creates promise and connects it with subject so subject get new value when promise is resolved or rejected
 ```

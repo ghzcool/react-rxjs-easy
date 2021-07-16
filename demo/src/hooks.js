@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
-import { hookFromSubject, PromiseSubjectState, promiseToSubject } from "react-rxjs-hooks";
+import { hookFromSubject, PromiseSubjectState, promiseToSubject } from "react-rxjs-easy";
 import { BehaviorSubject } from "rxjs";
 
 export const counterSubject = new BehaviorSubject(0);
-export const useCounter = hookFromSubject({ useState, useEffect }, counterSubject);
+export const useCounter = hookFromSubject(counterSubject);
 
 export const responseSubject = new BehaviorSubject(new PromiseSubjectState());
-export const useResponse = hookFromSubject({ useState, useEffect }, responseSubject);
+export const useResponse = hookFromSubject(responseSubject);
 
 export const getResponseWithSuccess = () =>
   promiseToSubject(new Promise(resolve => resolve('success')), responseSubject);

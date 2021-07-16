@@ -1,4 +1,12 @@
-import {BehaviorSubject, Subject} from "rxjs";
+let useEffectFn = () => {};
+let useStateFn = () => {
+    console.error('Please run connectReactHooks(useEffect, useState) first');
+};
+
+export function connectReactHooks(useEffect, useState) {
+    useEffectFn = useEffect;
+    useStateFn = useState;
+}
 
 export function PromiseSubjectState(data = null, loading = false, error = null) {
     this.data = data;
@@ -11,9 +19,9 @@ export function PromiseToSubjectOptions(suppressErrors = false, errorHandler = n
     this.errorHandler = errorHandler ? errorHandler : (error) => console.error(error);
 }
 
-const useSubject = (imports, subject, callback = null) => {
-    const [value, setValue] = imports.useState(subject.getValue ? subject.getValue() : null);
-    imports.useEffect(() => {
+const useSubject = (subject, callback = null) => {
+    const [value, setValue] = useStateFn(subject.getValue ? subject.getValue() : null);
+    useEffectFn(() => {
         const subscription = subject.subscribe((value) => {
             setValue(value);
             !!callback && callback(value);
@@ -23,18 +31,18 @@ const useSubject = (imports, subject, callback = null) => {
     return value;
 };
 
-export const hookFromSubject = (imports, subject) => () => useSubject(imports, subject);
+export const hookFromSubject = (subject) => () => useSubject(subject);
 
 export const promiseToSubject = (promise, subject, options = new PromiseToSubjectOptions()) => {
     subject.next(new PromiseSubjectState(null, true));
     promise.then(
-      data => subject.next(new PromiseSubjectState(data)),
-      error => {
-          subject.next(new PromiseSubjectState(null, false, error));
-          if (!options.suppressErrors) {
-              options.errorHandler(error);
-          }
-      }
+        data => subject.next(new PromiseSubjectState(data)),
+        error => {
+            subject.next(new PromiseSubjectState(null, false, error));
+            if (!options.suppressErrors) {
+                options.errorHandler(error);
+            }
+        }
     );
     return promise;
 };
