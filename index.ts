@@ -1,7 +1,10 @@
 import {BehaviorSubject, Subject} from "rxjs";
 
 export class PromiseSubjectState {
-    constructor(public data: any = null, public loading: boolean = false, public error: any = null) {
+    constructor(public data: any = null,
+                public loading: boolean = false,
+                public error: any = null,
+                abort: () => undefined = () => undefined) {
     }
 }
 
@@ -26,7 +29,10 @@ export const useSubject = (
             setValue(value);
             !!callback && callback(value);
         });
-        return () => subscription.unsubscribe();
+        return () => {
+            subscription.unsubscribe();
+            value?.abort && value?.abort();
+        };
     }, [subject]);
     return value;
 };
@@ -41,7 +47,7 @@ export const promiseToSubject = (
     subject: BehaviorSubject<any> | Subject<any>,
     options: PromiseToSubjectOptions = new PromiseToSubjectOptions(),
 ): Promise<any> => {
-    subject.next(new PromiseSubjectState(null, true));
+    subject.next(new PromiseSubjectState(null, true, null, promise ? promise['abort'] : null));
     promise.then(
         data => subject.next(new PromiseSubjectState(data)),
         error => {

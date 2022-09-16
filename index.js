@@ -1,4 +1,5 @@
-let useEffectFn = () => {};
+let useEffectFn = () => {
+};
 let useStateFn = () => {
     console.error('Please run connectReactHooks(useEffect, useState) first');
 };
@@ -8,10 +9,11 @@ export function connectReactHooks(useEffect, useState) {
     useStateFn = useState;
 }
 
-export function PromiseSubjectState(data = null, loading = false, error = null) {
+export function PromiseSubjectState(data = null, loading = false, error = null, abort = () => undefined) {
     this.data = data;
     this.loading = loading;
     this.error = error;
+    this.abort = abort;
 }
 
 export function PromiseToSubjectOptions(suppressErrors = false, errorHandler = null) {
@@ -26,7 +28,10 @@ const useSubject = (subject, callback = null) => {
             setValue(value);
             !!callback && callback(value);
         });
-        return () => subscription.unsubscribe();
+        return () => {
+            subscription.unsubscribe();
+            value?.abort && value?.abort();
+        };
     }, [subject]);
     return value;
 };
@@ -34,7 +39,7 @@ const useSubject = (subject, callback = null) => {
 export const hookFromSubject = (subject) => () => useSubject(subject);
 
 export const promiseToSubject = (promise, subject, options = new PromiseToSubjectOptions()) => {
-    subject.next(new PromiseSubjectState(null, true));
+    subject.next(new PromiseSubjectState(null, true, null, promise?.abort));
     promise.then(
         data => subject.next(new PromiseSubjectState(data)),
         error => {
