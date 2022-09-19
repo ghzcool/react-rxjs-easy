@@ -29,8 +29,9 @@ const useSubject = (subject, callback = null) => {
             !!callback && callback(value);
         });
         return () => {
-            subscription.unsubscribe();
+            const value = subject.getValue ? subject.getValue() : null;
             value?.abort && value?.abort();
+            subscription.unsubscribe();
         };
     }, [subject]);
     return value;
